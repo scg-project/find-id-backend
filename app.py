@@ -11,20 +11,24 @@ with open("data/VitalRecords.JSON") as vital_json:
 parser = reqparse.RequestParser()
 
 
-class Links(Resource):
+class Vital_Records(Resource):
     def get(self):
         parser.add_argument("state")
-        parser.add_argument("type")
         args = parser.parse_args()
-        if args["type"] == "dmv":
-            return dmv_data[args["state"]]
-        else:
-            return vital_data[args["state"]]
+        return vital_data[args["state"]]
+
+
+class DMV(Resource):
+    def get(self):
+        parser.add_argument("state")
+        args = parser.parse_args()
+        return dmv_data[args["state"]]
 
 
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(Links, "/links/")
+api.add_resource(Vital_Records, "/get_url/vital_records/")
+api.add_resource(Vital_Records, "/get_url/state_id/")
 
 if __name__ == "__main__":
     app.run(debug=True)
