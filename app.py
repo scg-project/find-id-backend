@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 import json
 
 with open("data/DMV.JSON") as dmv_json:
@@ -26,6 +27,7 @@ class DMV(Resource):
 
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 api.add_resource(Vital_Records, "/get_url/vital_records/")
 api.add_resource(DMV, "/get_url/state_id/")
